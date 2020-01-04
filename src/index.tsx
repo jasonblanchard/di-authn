@@ -56,7 +56,6 @@ app.post('/login', (request, response) => {
   const { username, password } = request.body;
   const user = usersByUsername[username];
 
-  console.log('===', user);
   if (user && user.password === password) {
     if (request.session) request.session.user = { id: user.id, uuid: user.uuid };
     return response.status(201).end();
@@ -70,7 +69,6 @@ app.get('/csrf', csrfProtection, (request, response) => {
 });
 
 app.use('/session/authn*', csrfProtection, (request, response) => {
-  console.log('===', request.cookies.sessionId, request?.session?.user);
   if (request.cookies.sessionId && request?.session?.user) {
     // TODO: Cache this and regenerate when it expires
     var token = jwt.sign({

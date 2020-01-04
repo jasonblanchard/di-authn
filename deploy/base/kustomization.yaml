@@ -8,7 +8,7 @@ resources:
 - mapping.yaml
 images:
 - name: jasonblanchard/di-authn
-  newTag: a3b229f0079423b6fa1323fec44b393fae02c40c
+  newTag: b34b492a2d9b64f7cf5048efa345b0df758449ed
 configMapGenerator:
 - literals:
   - PORT=8080
