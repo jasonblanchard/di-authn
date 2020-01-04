@@ -3,6 +3,6 @@ kind: Mapping
 metadata:
   name: authn
 spec:
-  prefix: /authn/api/
+  prefix: /api/authn/
   service: authn:8080
   rewrite: '/'
