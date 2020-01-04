@@ -7,10 +7,14 @@ resources:
 - service.yaml
 - mapping.yaml
 images:
-- name: jasonblanchard/di-auth
+- name: jasonblanchard/di-authn
   newTag: latest
 configMapGenerator:
 - literals:
   - PORT=8080
-  - NATS_HOST=nats://nats:4222
-  name: auth-config
+  - JWT_SECRET=SEKRET
+  - SESSION_SECRET=SHHHH
+  - LOGIN_PATH=/anon/login
+  - TEST_PASSWORD=testpass
+  - JASON_PASSWORD=testpass
+  name: authn-config

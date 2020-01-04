@@ -2,26 +2,26 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: auth
-  name: auth
+    app: authn
+  name: authn
   namespace: di
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth
+      app: authn
   template:
     metadata:
       labels:
-        app: auth
+        app: authn
     spec:
-      serviceAccountName: auth
+      serviceAccountName: authn
       containers:
-      - image: jasonblanchard/di-auth
-        name: auth
+      - image: jasonblanchard/di-authn
+        name: authn
         envFrom:
           - configMapRef:
-              name: auth-config
+              name: authn-config
         livenessProbe:
           httpGet:
             path: /health

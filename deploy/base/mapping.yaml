@@ -1,8 +1,8 @@
 apiVersion: getambassador.io/v1
 kind: Mapping
 metadata:
-  name: auth
+  name: authn
 spec:
-  prefix: /auth/api/
-  service: auth:8080
+  prefix: /authn/api/
+  service: authn:8080
   rewrite: '/'

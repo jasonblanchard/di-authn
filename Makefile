@@ -1,6 +1,6 @@
 .PHONY: build tag push deploy
 
-IMAGE_NAME=di-auth
+IMAGE_NAME=di-authn
 GIT_SHA = $(shell git rev-parse HEAD)
 IMAGE_REPO=jasonblanchard/${IMAGE_NAME}
 LOCAL_TAG = ${IMAGE_REPO}
