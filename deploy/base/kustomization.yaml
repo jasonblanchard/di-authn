@@ -12,9 +12,5 @@ images:
 configMapGenerator:
 - literals:
   - PORT=8080
-  - JWT_SECRET=SEKRET
-  - SESSION_SECRET=SHHHH
   - LOGIN_PATH=/anon/login
-  - TEST_PASSWORD=testpass
-  - JASON_PASSWORD=testpass
   name: authn-config
