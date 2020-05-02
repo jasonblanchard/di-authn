@@ -21,11 +21,11 @@ spec:
     spec:
       serviceAccountName: authn
       containers:
-      - image: jasonblanchard/di-authn
+      - image: jasonblanchard/di-authn:latest # {"$ref":"#/definitions/io.k8s.cli.substitutions.image"}
         name: authn
         envFrom:
-          - configMapRef:
-              name: authn-config
+        - configMapRef:
+            name: authn-config
         livenessProbe:
           httpGet:
             path: /health
@@ -35,5 +35,4 @@ spec:
             path: /health
             port: 8080
         ports:
-          - containerPort: 8080
-
+        - containerPort: 8080

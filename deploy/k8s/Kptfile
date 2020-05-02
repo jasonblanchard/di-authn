@@ -1,0 +1,22 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: .
+packageMetadata:
+  shortDescription: di-authn
+openAPI:
+  definitions:
+    io.k8s.cli.setters.tag:
+      x-k8s-cli:
+        setter:
+          name: tag
+          value: latest
+          setBy: package-default
+    io.k8s.cli.substitutions.image:
+      x-k8s-cli:
+        substitution:
+          name: image
+          pattern: jasonblanchard/di-authn:TAG_SETTER
+          values:
+          - marker: TAG_SETTER
+            ref: '#/definitions/io.k8s.cli.setters.tag'

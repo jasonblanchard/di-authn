@@ -1,11 +1,10 @@
----
 apiVersion: getambassador.io/v1
-kind:  AuthService
+kind: AuthService
 metadata:
-  name:  authn-filter
+  name: authn-filter
 spec:
   auth_service: "authn:8080"
-  path_prefix:  "/session/authn"
+  path_prefix: "/session/authn"
   proto: http
   allowed_request_headers:
   - "CSRF-Token"
