@@ -3,24 +3,24 @@ kind: AuthService
 metadata:
   name: authn-filter
 spec:
-  auth_service: "authn:8080"
-  path_prefix: "/session/authn"
-  proto: http
   allowed_request_headers:
   - "CSRF-Token"
+  auth_service: "authn:8080"
+  failure_mode_allow: false
   include_body:
-    max_bytes: 4096
     allow_partial: true
+    max_bytes: 4096
+  path_prefix: "/session/authn"
+  proto: http
   status_on_error:
     code: 503
-  failure_mode_allow: false
 ---
 apiVersion: getambassador.io/v1
 kind: Mapping
 metadata:
   name: authn
 spec:
-  prefix: /api/authn/
   service: authn:8080
-  rewrite: '/'
+  prefix: /api/authn/
   bypass_auth: true
+  rewrite: '/'

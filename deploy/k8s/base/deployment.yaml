@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: authn
   name: authn
   namespace: di
+  labels:
+    app: authn
 spec:
   replicas: 1
   selector:
@@ -21,18 +21,18 @@ spec:
     spec:
       serviceAccountName: authn
       containers:
-      - image: jasonblanchard/di-authn:latest # {"$ref":"#/definitions/io.k8s.cli.substitutions.image"}
-        name: authn
+      - name: authn
+        image: jasonblanchard/di-authn:latest
+        ports:
+        - containerPort: 8080
         envFrom:
         - configMapRef:
             name: authn-config
         livenessProbe:
           httpGet:
-            path: /health
             port: 8080
+            path: /health
         readinessProbe:
           httpGet:
-            path: /health
             port: 8080
-        ports:
-        - containerPort: 8080
+            path: /health

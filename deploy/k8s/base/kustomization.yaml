@@ -1,16 +1,16 @@
+namespace: di
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: di
 resources:
 - sa.yaml
 - deployment.yaml
 - service.yaml
 - mapping.yaml
+configMapGenerator:
+- name: authn-config
+  literals:
+  - PORT=8080
+  - LOGIN_PATH=/anon/login
 images:
 - name: jasonblanchard/di-authn
   newTag: latest
-configMapGenerator:
-- literals:
-  - PORT=8080
-  - LOGIN_PATH=/anon/login
-  name: authn-config

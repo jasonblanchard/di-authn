@@ -3,11 +3,13 @@ kind: Kustomization
 bases:
 - ../base
 configMapGenerator:
-- literals:
+- name: authn-config
+  namespace: di
+  behavior: merge
+  literals:
   - TEST_PASSWORD=vault:secret/data/di-authn/production/app#TEST_PASSWORD
   - JASON_PASSWORD=vault:secret/data/di-authn/production/app#JASON_PASSWORD
   - JWT_SECRET=vault:secret/data/di-authn/production/app#JWT_SECRET
   - SESSION_SECRET=vault:secret/data/di-authn/production/app#SESSION_SECRET
-  name: authn-config
-  namespace: di
-  behavior: merge
+images:
+- jasonblanchard/di-authn:latest # {"$ref":"#/definitions/io.k8s.cli.substitutions.image"}
