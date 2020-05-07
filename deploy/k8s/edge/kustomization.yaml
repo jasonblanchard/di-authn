@@ -12,4 +12,4 @@ configMapGenerator:
   - JWT_SECRET=vault:secret/data/di-authn/development/app#JWT_SECRET
   - SESSION_SECRET=vault:secret/data/di-authn/development/app#SESSION_SECRET
 images:
-- jasonblanchard/di-authn:latest # {"$ref":"#/definitions/io.k8s.cli.substitutions.image"}
+- name: jasonblanchard/di-authn:latest # {"$ref":"#/definitions/io.k8s.cli.substitutions.image"}
