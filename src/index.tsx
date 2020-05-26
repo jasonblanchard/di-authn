@@ -23,7 +23,7 @@ const usersByUsername: UsersByUsername = {
   'jason': {
     username: 'jason',
     password: process.env.JASON_PASSWORD,
-    id: 1,
+    id: 2,
     uuid: '2b5545ef-3557-4f52-994d-daf89e04c390'
   }
 }
