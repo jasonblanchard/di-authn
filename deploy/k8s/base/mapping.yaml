@@ -5,7 +5,6 @@ metadata:
 spec:
   allowed_request_headers:
   - "CSRF-Token"
-  auth_service: "authn:8080"
   failure_mode_allow: false
   include_body:
     allow_partial: true
@@ -20,7 +19,6 @@ kind: Mapping
 metadata:
   name: authn
 spec:
-  service: authn:8080
   prefix: /api/authn/
   bypass_auth: true
   rewrite: '/'
