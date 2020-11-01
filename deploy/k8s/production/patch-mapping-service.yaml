@@ -1,0 +1,13 @@
+apiVersion: getambassador.io/v1
+kind: AuthService
+metadata:
+  name: authn-filter
+spec:
+  auth_service: "authn-production:8080"
+---
+apiVersion: getambassador.io/v1
+kind: Mapping
+metadata:
+  name: authn
+spec:
+  service: authn-production:8080
