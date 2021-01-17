@@ -11,5 +11,7 @@ configMapGenerator:
   - JASON_PASSWORD=vault:secret/data/di-authn/production/app#JASON_PASSWORD
   - JWT_SECRET=vault:secret/data/di-authn/production/app#JWT_SECRET
   - SESSION_SECRET=vault:secret/data/di-authn/production/app#SESSION_SECRET
+  - TEST_API_TOKEN=vault:secret/data/di-authn/production/app#TEST_API_TOKEN
+  - JASON_API_TOKEN=vault:secret/data/di-authn/production/app#JASON_API_TOKEN
 patchesStrategicMerge:
   - patch-mapping-service.yaml
