@@ -15,3 +15,14 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         tags: "latest,${{ github.sha }}"
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: jasonblanchard/di-deploy/.github/actions/deploy-dispatch@main
+        with:
+          username: ${{ secrets.DEPLOY_USERNAME }}
+          token: ${{ secrets.DEPLOY_TOKEN }}
+          service: authn
+          environment: production
+          version: ${{ github.sha }}
