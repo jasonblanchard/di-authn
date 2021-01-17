@@ -28,6 +28,18 @@ const usersByUsername: UsersByUsername = {
   }
 }
 
+interface UsernamesByApiToken {
+  [key: string]: string;
+}
+
+const TEST_API_TOKEN = process.env.TEST_API_TOKEN || ''
+const JASON_API_TOKEN = process.env.JASON_API_TOKEN || ''
+
+const usernamesByApiToken: UsernamesByApiToken = {
+  [TEST_API_TOKEN]: 'test',
+  [JASON_API_TOKEN]: 'test',
+}
+
 require('dotenv').config();
 
 const PORT = process.env.PORT || 8081;
@@ -45,7 +57,15 @@ app.use(session({
   saveUninitialized: true,
   // TODO: Use RedisStore
 }));
-const csrfProtection = csrf({ cookie: true });
+// const csrfProtection = csrf({ cookie: true });
+// TODO: Fix request type
+const csrfProtection = (request: any, response: Response, next: NextFunction) => {
+  if (request.headers.authorization) {
+    return next();
+  } else {
+    return csrf({ cookie: true })(request, response, next)
+  }
+}
 app.use(cookieParser());
 
 app.get('/health', (_request, response) => {
@@ -78,6 +98,24 @@ app.use('/session/authn*', csrfProtection, (request, response) => {
     response.header('Authorization', `Bearer ${token}`);
     return response.status(200).end();
   }
+
+  if (request.headers.authorization) {
+    const apiToken = request.headers.authorization.replace("Bearer ", "")
+    const username = usernamesByApiToken[apiToken]
+    const user = usersByUsername[username]
+
+    if (!user)  {
+      const error = Boom.unauthorized();
+      return response.status(401).send(error.message);
+    }
+
+    const token = jwt.sign({
+      uesrUuid: user.uuid
+    }, JWT_SECRET);
+    response.header('Authorization', `Bearer ${token}`);
+    return response.status(200).end();
+  }
+
   const error = Boom.unauthorized();
 
   switch (request.accepts(['html', 'json'])) {

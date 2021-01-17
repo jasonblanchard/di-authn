@@ -148,6 +148,28 @@ describe('GET /session/authn', () => {
 
     expect(authnResponse.status).toEqual(200);
   });
+
+  it('allows POST requests with API bearer token', async () => {
+    const authnResponse = await fetch(`${baseUrl}/session/authn`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.TEST_API_TOKEN}`,
+      },
+    });
+
+    expect(authnResponse.status).toEqual(200);
+  });
+
+  it('rejects POST requests with bad API bearer token', async () => {
+    const authnResponse = await fetch(`${baseUrl}/session/authn`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer abcd`,
+      },
+    });
+
+    expect(authnResponse.status).toEqual(401);
+  });
 });
 
 describe('DELETE /session', () => {
