@@ -1,5 +1,5 @@
 import Boom from '@hapi/boom';
-import express, { Response, NextFunction } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import session from 'express-session';
@@ -57,9 +57,9 @@ app.use(session({
   saveUninitialized: true,
   // TODO: Use RedisStore
 }));
-// const csrfProtection = csrf({ cookie: true });
-// TODO: Fix request type
-const csrfProtection = (request: any, response: Response, next: NextFunction) => {
+
+const csrfProtection = (request: Request, response: Response, next: NextFunction) => {
+  // Skip CSRF protection if authorizing request via API token
   if (request.headers.authorization) {
     return next();
   } else {
@@ -89,6 +89,7 @@ app.get('/csrf', csrfProtection, (request, response) => {
 });
 
 app.use('/session/authn*', csrfProtection, (request, response) => {
+  // First, try API token auth if there is a Bearer token in Authorization header
   if (request.headers.authorization) {
     console.log(`Using API token auth for ${request.headers.authorization}`)
     const apiToken = request.headers.authorization.replace("Bearer ", "")
@@ -108,6 +109,7 @@ app.use('/session/authn*', csrfProtection, (request, response) => {
     return response.status(200).end();
   }
   
+  // Otherwise, do session auth
   if (request.cookies.sessionId && request?.session?.user) {
     console.log("Using session auth")
     // TODO: Cache this and regenerate when it expires
