@@ -89,28 +89,28 @@ app.get('/csrf', csrfProtection, (request, response) => {
 });
 
 app.use('/session/authn*', csrfProtection, (request, response) => {
-  if (request.cookies.sessionId && request?.session?.user) {
-    // TODO: Cache this and regenerate when it expires
-    var token = jwt.sign({
-      uesrUuid: request?.session?.user.uuid,
-      csrfToken: request.csrfToken()
-    }, JWT_SECRET);
-    response.header('Authorization', `Bearer ${token}`);
-    return response.status(200).end();
-  }
-
   if (request.headers.authorization) {
     const apiToken = request.headers.authorization.replace("Bearer ", "")
     const username = usernamesByApiToken[apiToken]
     const user = usersByUsername[username]
 
-    if (!user)  {
+    if (!user) {
       const error = Boom.unauthorized();
       return response.status(401).send(error.message);
     }
 
     const token = jwt.sign({
       uesrUuid: user.uuid
+    }, JWT_SECRET);
+    response.header('Authorization', `Bearer ${token}`);
+    return response.status(200).end();
+  }
+  
+  if (request.cookies.sessionId && request?.session?.user) {
+    // TODO: Cache this and regenerate when it expires
+    var token = jwt.sign({
+      uesrUuid: request?.session?.user.uuid,
+      csrfToken: request.csrfToken()
     }, JWT_SECRET);
     response.header('Authorization', `Bearer ${token}`);
     return response.status(200).end();
