@@ -5,6 +5,7 @@ metadata:
 spec:
   allowed_request_headers:
   - "CSRF-Token"
+  - "Accepts"
   failure_mode_allow: false
   include_body:
     allow_partial: true
