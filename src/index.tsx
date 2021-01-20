@@ -123,6 +123,7 @@ app.use('/session/authn*', csrfProtection, (request, response) => {
 
   const error = Boom.unauthorized();
 
+  console.log(request.headers.accept)
   console.log({ accepts: request.accepts(['json', 'html']) })
   switch (request.accepts(['html', 'json'])) {
     case 'html':
