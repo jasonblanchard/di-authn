@@ -37,7 +37,7 @@ const JASON_API_TOKEN = process.env.JASON_API_TOKEN || ''
 
 const usernamesByApiToken: UsernamesByApiToken = {
   [TEST_API_TOKEN]: 'test',
-  [JASON_API_TOKEN]: 'test',
+  [JASON_API_TOKEN]: 'jason',
 }
 
 require('dotenv').config();
